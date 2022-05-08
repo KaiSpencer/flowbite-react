@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { ComponentProps, FC, PropsWithChildren } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link as RRLink, useLocation } from 'react-router-dom';
 import { Badge, BadgeColor } from '../Badge';
 import { Tooltip } from '../Tooltip';
 import { useSidebarContext } from './SidebarContext';
@@ -11,6 +11,7 @@ export interface SidebarItem {
   icon?: FC<ComponentProps<'svg'>>;
   label?: string;
   labelColor?: BadgeColor;
+  Link?: any;
 }
 
 export interface SidebarItemProps extends PropsWithChildren<SidebarItem> {
@@ -24,9 +25,10 @@ const SidebarItem: FC<SidebarItemProps> = ({
   icon: Icon,
   label,
   labelColor = 'blue',
+  Link = RRLink,
   ...rest
 }) => {
-  const { pathname } = useLocation();
+  const pathname = window.location.pathname;
   const { collapsed } = useSidebarContext();
   const { insideCollapse } = useSidebarItemContext();
 
